@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard K3L</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+          },
+          colors: {
+            'sidebar-bg': '#095a79',
+            'sidebar-hover': '#117196',
+          }
+        },
+      },
+    }
+  </script>
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="global.css">
+</head>
+
+<body class="flex h-screen bg-white text-gray-800 font-sans overflow-hidden">
+
+  <!-- SIDEBAR (Menu Kiri) -->
+  <aside class="w-64 bg-sidebar-bg text-white hidden md:flex flex-col flex-shrink-0">
+    <div class="h-20 flex items-center justify-center border-b border-white/20 mt-4 mb-8">
+      <img src="assets/logo/logo-pusharlis.png" alt="Logo PLN" class="h-12" />
+    </div>
+
+    <nav class="flex flex-col w-full text-center font-semibold text-[17px] space-y-2">
+      <a href="#" class="w-full py-4 bg-sidebar-hover transition-colors">Dashboard K3L</a>
+      <a href="#" class="w-full py-4 hover:bg-sidebar-hover transition-colors">Dashboard Satpam</a>
+      <a href="#" class="w-full py-4 hover:bg-sidebar-hover transition-colors">Data User</a>
+    </nav>
+  </aside>
+
+  <!-- AREA KONTEN UTAMA (Kanan) -->
+  <div class="flex-1 flex flex-col h-screen overflow-hidden">
+    
+    <!-- HEADER -->
+    <header class="h-20 bg-white flex items-center justify-end px-8 gap-6 shadow-sm z-10">
+      <div class="flex items-center gap-3 text-right">
+        <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
+          <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div class="leading-tight">
+          <p id="user-name" class="font-bold text-sm text-black">Memuat...</p>
+          <p id="user-role" class="text-xs text-gray-600">Memuat...</p>
+        </div>
+      </div>
+
+      <button class="text-[#095a79] hover:text-[#117196] transition-colors">
+        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+      </button>
+
+      <button id="btn-logout" title="Keluar" class="text-[#095a79] hover:text-[#117196] transition-colors border-l-2 border-gray-300 pl-6">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      </button>
+    </header>
+
+    <!-- KONTEN DASBOR -->
+    <main class="flex-1 overflow-y-auto p-8 bg-white">
+      <h1 class="text-3xl font-bold text-black mb-6">Dashboard</h1>
+      
+      <!-- IKON MENU -->
+      <div id="icon-container" class="flex gap-3 overflow-x-auto px-4 py-4 hilangkan-scrollbar items-start">
+        <button id="btn-icon-apar" data-modul="apar" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-apar.png" alt="APAR" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">APAR</span>
+        </button>
+
+        <button id="btn-icon-apd" data-modul="apd" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110">
+            <img src="assets/icon/icon-apd.png" alt="APD" class="w-full h-full object-contain" />
+          </div>
+          <span class="mt-1 font-bold text-sm text-black">APD</span>
+        </button>
+      
+        <button id="btn-icon-apab" data-modul="apab" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-apab.png" alt="APAB" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">APAB</span>
+        </button>
+        
+        <button id="btn-icon-firealarm" data-modul="firealarm" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-firealarm.png" alt="FIRE ALARM" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black text-center leading-tight">FIRE<br>ALARM</span>
+        </button>
+
+        <button id="btn-icon-boxhydrant" data-modul="boxhydrant" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-hydrantbox.png" alt="BOX HYDRANT" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black text-center leading-tight">BOX<br>HYDRANT</span>
+        </button>
+
+        <button id="btn-icon-pompahydrant" data-modul="pompahydrant" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-hydrantpump.png" alt="POMPA HYDRANT" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black text-center leading-tight">POMPA<br>HYDRANT</span>
+        </button>
+
+        <button id="btn-icon-p3k" data-modul="p3k" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-p3k.png" alt="P3K" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">P3K</span>
+        </button>
+
+        <button id="btn-icon-cctv" data-modul="cctv" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-cctv.png" alt="CCTV" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">CCTV</span>
+        </button>
+      </div>
+
+      <!-- SECTION TABEL APAR -->
+      <div id="section-apar" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">APAR</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-apar" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-apar" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah APAR</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apar', 'kode')">Kode APAR <span id="icon-sort-apar-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apar', 'pengawas')">Pengawas <span id="icon-sort-apar-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apar', 'petugas')">Petugas <span id="icon-sort-apar-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apar', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-apar-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-apar" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data APAR...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION TABEL APAB -->
+      <div id="section-apab" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">APAB</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-apab" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-apab" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah APAB</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apab', 'kode')">Kode APAB <span id="icon-sort-apab-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apab', 'pengawas')">Pengawas <span id="icon-sort-apab-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apab', 'petugas')">Petugas <span id="icon-sort-apab-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apab', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-apab-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-apab" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data APAB...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION TABEL FIRE ALARM -->
+      <div id="section-firealarm" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">Fire Alarm</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-firealarm" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-firealarm" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah Fire Alarm</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('firealarm', 'kode')">Kode Fire Alarm <span id="icon-sort-firealarm-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('firealarm', 'pengawas')">Pengawas <span id="icon-sort-firealarm-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('firealarm', 'petugas')">Petugas <span id="icon-sort-firealarm-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('firealarm', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-firealarm-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-firealarm" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data Fire Alarm...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION TABEL BOX HYDRANT -->
+      <div id="section-boxhydrant" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">Box Hydrant</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-boxhydrant" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-boxhydrant" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah Box Hydrant</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('boxhydrant', 'kode')">Kode Box Hydrant <span id="icon-sort-boxhydrant-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('boxhydrant', 'pengawas')">Pengawas <span id="icon-sort-boxhydrant-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('boxhydrant', 'petugas')">Petugas <span id="icon-sort-boxhydrant-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('boxhydrant', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-boxhydrant-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-boxhydrant" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data Box Hydrant...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION TABEL APD -->
+      <div id="section-apd" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">APD</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-apd" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-apd" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah APD</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apd', 'kode')">Kode APD <span id="icon-sort-apd-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apd', 'pengawas')">Pengawas <span id="icon-sort-apd-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apd', 'petugas')">Petugas <span id="icon-sort-apd-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('apd', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-apd-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-apd" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data APD...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION TABEL POMPA HYDRANT -->
+      <div id="section-pompahydrant" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">Pompa Hydrant</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-pompahydrant" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-pompahydrant" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah Pompa Hydrant</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('pompahydrant', 'kode')">Kode Pompa Hydrant <span id="icon-sort-pompahydrant-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('pompahydrant', 'pengawas')">Pengawas <span id="icon-sort-pompahydrant-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('pompahydrant', 'petugas')">Petugas <span id="icon-sort-pompahydrant-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('pompahydrant', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-pompahydrant-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-pompahydrant" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data Pompa Hydrant...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION TABEL P3K -->
+      <div id="section-p3k" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">P3K</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-p3k" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-p3k" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah P3K</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('p3k', 'kode')">Kode P3K <span id="icon-sort-p3k-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('p3k', 'pengawas')">Pengawas <span id="icon-sort-p3k-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('p3k', 'petugas')">Petugas <span id="icon-sort-p3k-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('p3k', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-p3k-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-p3k" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data P3K...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION TABEL CCTV -->
+      <div id="section-cctv" class="sec-tabel mt-8 hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-3xl font-bold text-black">CCTV</h2>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="search-cctv" placeholder="Cari Kode, Nama, Bulan..." class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] block pl-10 p-2.5 outline-none shadow-sm transition-all" />
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+            </div>
+            <button id="btn-tambah-cctv" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hidden whitespace-nowrap">Tambah CCTV</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-[#d2e5ed] text-gray-900 text-sm font-bold">
+              <tr>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('cctv', 'kode')">Kode CCTV <span id="icon-sort-cctv-kode" class="text-xs text-gray-600 ml-1">▲</span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('cctv', 'pengawas')">Pengawas <span id="icon-sort-cctv-pengawas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('cctv', 'petugas')">Petugas <span id="icon-sort-cctv-petugas" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center cursor-pointer hover:bg-[#b8d4e0] transition-colors select-none" onclick="sortTabelCustom('cctv', 'inspeksi')">Inspeksi Terakhir <span id="icon-sort-cctv-inspeksi" class="text-xs text-gray-600 ml-1"></span></th>
+                <th class="p-4 text-center">Bulan</th>
+                <th class="p-4 text-center">Hasil Inspeksi</th>
+                <th class="p-4 text-center col-aksi hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-cctv" class="text-sm divide-y divide-gray-200 bg-white">
+              <tr><td colspan="7" class="p-4 text-center text-gray-500">Memuat data CCTV...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Denah K3L Utama -->
+      <h1 class="text-3xl font-bold text-black mt-12 mb-6">Denah K3L</h1>
+      <div id="denah-utama-container" class="relative w-full max-w-5xl bg-white border border-gray-200 rounded-xl shadow-sm p-4 overflow-hidden">
+        <img src="assets/bg/denah-k3l.png" alt="Denah K3L PLN Pusharlis" class="w-full h-auto object-contain block pointer-events-none" />
+        <div id="pin-container-utama" class="absolute inset-4 pointer-events-none"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL / POP-UP TAMBAH DATA -->
+  <div id="modal-tambah-apar" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="modal-box" class="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 overflow-hidden transform transition-all duration-300 scale-95 max-h-[90vh] flex flex-col">
+      <div class="bg-[#095a79] text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
+        <h3 id="modal-title" class="font-bold text-lg">Tambah Unit Baru</h3>
+        <button id="btn-tutup-modal" class="text-white hover:text-gray-200 text-2xl font-bold">&times;</button>
+      </div>
+
+      <form id="form-tambah-apar" class="p-6 space-y-4 overflow-y-auto flex-1">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Kode Unit</label>
+          <input type="text" id="input-kode-apar" required placeholder="Contoh: UNIT 01" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] p-2.5 outline-none shadow-sm uppercase" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Pengawas</label>
+          <input type="text" id="input-pengawas" list="list-pengawas-terdaftar" required placeholder="Ketik atau pilih nama pengawas..." class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] p-2.5 outline-none shadow-sm" />
+          <datalist id="list-pengawas-terdaftar"></datalist>
+          <p class="text-xs text-gray-500 mt-1">Nama baru akan otomatis tersimpan untuk pilihan berikutnya.</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Titik Lokasi di Denah</label>
+          <p class="text-xs text-gray-500 mb-2">Klik pada denah di bawah ini untuk menandai posisi fisik:</p>
+          <div id="denah-container" class="relative w-full border border-gray-300 rounded-lg overflow-hidden cursor-crosshair bg-gray-100 select-none shadow-inner">
+            <img id="denah-preview-img" src="assets/bg/denah-k3l.png" alt="Denah K3L" class="w-full h-auto object-contain pointer-events-none block" />
+            <div id="pin-marker" class="absolute w-4 h-4 bg-red-600 border-2 border-white rounded-full shadow-lg transform -translate-x-1/2 -translate-y-1/2 hidden pointer-events-none z-10"></div>
+          </div>
+          <input type="hidden" id="input-pos-x" />
+          <input type="hidden" id="input-pos-y" />
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <button type="button" id="btn-batal-modal" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded-lg transition-colors text-sm">Batal</button>
+          <button type="submit" id="btn-simpan-apar" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2 rounded-lg transition-colors text-sm shadow-sm">Simpan Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL EDIT MASTER DATA (PENSIL BIRU) -->
+  <div id="modal-edit" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="modal-edit-box" class="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 overflow-hidden transform transition-all duration-300 scale-95 flex flex-col">
+      <div class="bg-[#095a79] text-white px-6 py-4 flex justify-between items-center">
+        <h3 class="font-bold text-lg">Edit Master Unit</h3>
+        <button id="btn-tutup-edit" type="button" class="text-white hover:text-gray-200 text-2xl font-bold">&times;</button>
+      </div>
+
+      <form id="form-edit-data" class="p-6 space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Kode Unit</label>
+          <input type="text" id="edit-input-kode" required class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] p-2.5 outline-none shadow-sm uppercase" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Pengawas</label>
+          <input type="text" id="edit-input-pengawas" required class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#095a79] focus:border-[#095a79] p-2.5 outline-none shadow-sm" />
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <button type="button" id="btn-batal-edit" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded-lg transition-colors text-sm">Batal</button>
+          <button type="submit" id="btn-simpan-edit" class="bg-[#095a79] hover:bg-[#117196] text-white font-semibold px-5 py-2 rounded-lg transition-colors text-sm shadow-sm">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL POP-UP FORM ISI INSPEKSI (PETUGAS) -->
+  <div id="modal-inspeksi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    <div id="modal-box-inspeksi" class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-8 transform scale-95 transition-transform duration-300">
+      
+      <!-- Bagian Header Modal -->
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold text-gray-800 tracking-wide uppercase">MONITORING ALAT K3L</h2>
+        <h3 id="teks-judul-inspeksi" class="text-lg text-gray-600 uppercase mt-1">APAR - KODE UNIT</h3>
+      </div>
+      
+      <form id="form-inspeksi-rutin" class="space-y-5">
+        
+        <!-- Tanggal Pemeriksaan -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <label class="text-base font-medium text-gray-900 w-full sm:w-1/3">Tanggal Pemeriksaan</label>
+          <div class="w-full sm:w-2/3">
+            <input type="date" id="input-inspeksi-tanggal" required class="w-full bg-gray-200 text-gray-700 text-sm rounded-full px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#095a79] transition-all cursor-pointer" />
+          </div>
+        </div>
+
+        <!-- Bulan Inspeksi (Otomatis Terisi) -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <label class="text-base font-medium text-gray-900 w-full sm:w-1/3">Bulan Inspeksi</label>
+          <div class="w-full sm:w-2/3">
+            <input type="text" id="input-inspeksi-bulan" readonly placeholder="Pilih tanggal terlebih dahulu..." class="w-full bg-gray-300 text-gray-600 font-semibold text-sm rounded-full px-4 py-2.5 outline-none cursor-not-allowed border border-transparent" />
+          </div>
+        </div>
+
+        <hr class="border-gray-200 my-4">
+
+        <!-- Checklist Kondisi Alat -->
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-semibold text-base text-gray-900 w-1/2">Kondisi Alat K3L</span>
+            <div class="w-1/2 flex justify-around">
+              <span class="font-semibold text-base text-gray-900">Baik</span>
+              <span class="font-semibold text-base text-gray-900">Tidak Baik</span>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <!-- Parameter Fisik -->
+            <div class="flex justify-between items-center">
+              <label class="text-base text-gray-800 w-1/2">Kondisi Fisik</label>
+              <div class="w-1/2 flex justify-around">
+                <input type="radio" name="cek_fisik" value="Baik" required class="w-5 h-5 accent-[#095a79] cursor-pointer">
+                <input type="radio" name="cek_fisik" value="Tidak Baik" class="w-5 h-5 accent-black cursor-pointer">
+              </div>
+            </div>
+            
+            <!-- Parameter Segel/Kelengkapan -->
+            <div class="flex justify-between items-center">
+              <label class="text-base text-gray-800 w-1/2">Pin / Segel / Kelengkapan</label>
+              <div class="w-1/2 flex justify-around">
+                <input type="radio" name="cek_segel" value="Baik" required class="w-5 h-5 accent-[#095a79] cursor-pointer">
+                <input type="radio" name="cek_segel" value="Tidak Baik" class="w-5 h-5 accent-black cursor-pointer">
+              </div>
+            </div>
+            
+            <!-- Parameter Fungsi -->
+            <div class="flex justify-between items-center">
+              <label class="text-base text-gray-800 w-1/2">Fungsi / Handle / Selang</label>
+              <div class="w-1/2 flex justify-around">
+                <input type="radio" name="cek_fungsi" value="Baik" required class="w-5 h-5 accent-[#095a79] cursor-pointer">
+                <input type="radio" name="cek_fungsi" value="Tidak Baik" class="w-5 h-5 accent-black cursor-pointer">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-4">
+          <label class="text-base font-medium text-gray-900 w-full sm:w-1/3">Pressure Gauge (Tekanan)</label>
+          <div class="w-full sm:w-2/3">
+            <select id="input-inspeksi-pressure" required class="w-full bg-gray-200 text-gray-700 text-sm rounded-full px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#095a79] transition-all cursor-pointer">
+              <option value="" disabled selected>Pilih Status Tekanan</option>
+              <option value="Normal">Normal (Hijau)</option>
+              <option value="Turun">Turun (Merah Kiri)</option>
+              <option value="Naik">Naik / Over (Merah Kanan)</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="border-gray-200 my-4">
+
+        <!-- Tombol Aksi -->
+        <div class="flex justify-between items-center pt-2">
+          <button type="button" id="btn-reset-form-inspeksi" class="px-6 py-2 border-2 border-[#095a79] text-[#095a79] rounded-lg hover:bg-blue-50 transition-colors font-bold text-sm">Reset</button>
+          
+          <div class="flex gap-3">
+            <button type="button" id="btn-tutup-form-inspeksi" class="px-6 py-2 border-2 border-gray-400 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors font-bold text-sm">Batal</button>
+            <button type="submit" id="btn-kirim-inspeksi" class="px-6 py-2 bg-[#095a79] text-white rounded-lg hover:bg-[#074760] transition-colors font-bold text-sm shadow-md">Kirim</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- External Script -->
+  <script type="module" src="dashboard.js"></script>
+
+</body>
+</html>
