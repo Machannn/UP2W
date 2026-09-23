@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard K3L</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+          },
+          colors: {
+            'sidebar-bg': '#095a79',
+            'sidebar-hover': '#117196',
+          }
+        },
+      },
+    }
+  </script>
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="global.css">
+</head>
+
+<body class="flex h-screen bg-white text-gray-800 font-sans overflow-hidden">
+
+  <!-- SIDEBAR (Menu Kiri) -->
+  <aside class="w-64 bg-sidebar-bg text-white hidden md:flex flex-col flex-shrink-0">
+    <div class="h-20 flex items-center justify-center border-b border-white/20 mt-4 mb-8">
+      <img src="assets/logo/logo-pusharlis.png" alt="Logo PLN" class="h-12" />
+    </div>
+
+    <nav class="flex flex-col w-full text-center font-semibold text-[17px] space-y-2">
+      <a href="#" class="w-full py-4 bg-sidebar-hover transition-colors">Dashboard K3L</a>
+      <a href="#" class="w-full py-4 hover:bg-sidebar-hover transition-colors">Dashboard Satpam</a>
+      <a href="#" class="w-full py-4 hover:bg-sidebar-hover transition-colors">Data User</a>
+    </nav>
+  </aside>
+
+  <!-- AREA KONTEN UTAMA (Kanan) -->
+  <div class="flex-1 flex flex-col h-screen overflow-hidden">
+    
+    <!-- HEADER -->
+    <header class="h-20 bg-white flex items-center justify-end px-8 gap-6 shadow-sm z-10">
+      
+      <!-- AREA PROFIL -->
+      <a href="user-info.html" class="flex items-center gap-3 text-right group cursor-pointer hover:opacity-80 transition-opacity">
+        <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden border border-gray-200 group-hover:border-[#095a79]">
+          <img id="user-avatar-header" src="" alt="Profile" class="w-full h-full object-cover hidden" />
+          <svg id="user-icon-default" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+        </div>
+        <div class="leading-tight">
+          <p id="user-name" class="font-bold text-sm text-black group-hover:text-[#095a79]">Memuat...</p>
+          <p id="user-role" class="text-xs text-gray-600">Memuat...</p>
+        </div>
+      </a>
+
+      <!-- TOMBOL NOTIFIKASI -->
+      <button class="text-[#095a79] hover:text-[#117196] transition-colors">
+        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+      </button>
+
+      <!-- TOMBOL LOGOUT -->
+      <button id="btn-logout" title="Keluar" class="text-[#095a79] hover:text-[#117196] transition-colors border-l-2 border-gray-300 pl-6">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      </button>
+      
+    </header>
+
+    <!-- KONTEN DASBOR -->
+    <main class="flex-1 overflow-y-auto p-8 bg-white">
+      <h1 class="text-3xl font-bold text-black mb-6">Dashboard</h1>
+      
+      <!-- IKON MENU (Sebagai Navigasi Modul) -->
+      <div id="icon-container" class="flex gap-3 overflow-x-auto px-4 py-4 hilangkan-scrollbar items-start">
+        <button id="btn-icon-apar" data-modul="apar" onclick="bukaHalaman('apar')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-apar.png" alt="APAR" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">APAR</span>
+        </button>
+
+        <button id="btn-icon-apd" data-modul="apd" onclick="bukaHalaman('apd')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-apd.png" alt="APD" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">APD</span>
+        </button>
+
+        <button id="btn-icon-apab" data-modul="apab" onclick="bukaHalaman('apab')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-apab.png" alt="APAB" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">APAB</span>
+        </button>
+
+        <button id="btn-icon-firealarm" data-modul="firealarm" onclick="bukaHalaman('firealarm')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-firealarm.png" alt="FIRE ALARM" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black text-center leading-tight">FIRE<br>ALARM</span>
+        </button>
+
+        <button id="btn-icon-boxhydrant" data-modul="boxhydrant" onclick="bukaHalaman('boxhydrant')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-hydrantbox.png" alt="BOX HYDRANT" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black text-center leading-tight">BOX<br>HYDRANT</span>
+        </button>
+
+        <button id="btn-icon-pompahydrant" data-modul="pompahydrant" onclick="bukaHalaman('pompahydrant')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-hydrantpump.png" alt="POMPA HYDRANT" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black text-center leading-tight">POMPA<br>HYDRANT</span>
+        </button>
+
+        <button id="btn-icon-p3k" data-modul="p3k" onclick="bukaHalaman('p3k')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-p3k.png" alt="P3K" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">P3K</span>
+        </button>
+
+        <button id="btn-icon-cctv" data-modul="cctv" onclick="bukaHalaman('cctv')" class="group flex flex-col items-center flex-shrink-0 cursor-pointer focus:outline-none transition-all duration-300">
+          <div class="w-24 h-24 transform transition-transform duration-200 group-hover:scale-110"><img src="assets/icon/icon-cctv.png" alt="CCTV" class="w-full h-full object-contain" /></div>
+          <span class="mt-1 font-bold text-sm text-black">CCTV</span>
+        </button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- AREA KONTEN (TABEL DAN DENAH DIPISAH WADAHNYA) -->
+      <!-- ========================================== -->
+      <div id="area-tabel-komponen" class="mt-8"></div>
+
+      <div id="area-denah-utama" class="mt-8">
+        <h1 class="text-3xl font-bold text-black mt-4 mb-6">Denah K3L</h1>
+        <div id="denah-utama-container" class="relative w-full max-w-5xl bg-white border border-gray-200 rounded-xl shadow-sm p-4 overflow-hidden">
+          <img src="assets/bg/denah-k3l.png" alt="Denah K3L PLN Pusharlis" class="w-full h-auto object-contain block pointer-events-none" />
+          <div id="pin-container-utama" class="absolute inset-4 pointer-events-none"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL GLOBAL (Dipakai Bersama Oleh Semua Modul) -->
+  <!-- ========================================== -->
+  
+  <!-- MODAL EDIT MASTER UNIT -->
+  <div id="modal-edit" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="modal-edit-box" class="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 p-6 transform transition-all duration-300 scale-95 flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-200 mb-4">
+        <h3 class="text-lg font-bold text-gray-900">Edit Master Unit</h3>
+        <button type="button" id="btn-tutup-edit" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="form-edit-data" class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Kode Unit</label>
+          <input type="text" id="edit-input-kode" required class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm uppercase outline-none focus:ring-2 focus:ring-[#095a79]" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Pengawas Area</label>
+          <input type="text" id="edit-input-pengawas" required class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-[#095a79]" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Ubah Lokasi di Denah (Klik pada denah)</label>
+          <div id="container-denah-edit" class="relative w-full rounded-lg overflow-hidden border border-gray-300 cursor-crosshair bg-white flex justify-center items-center">
+            <img id="img-denah-edit" src="assets/bg/denah-k3l.png" alt="Denah Area" class="w-full h-auto block" />
+            <div id="pin-edit-lokasi" class="absolute w-5 h-5 -ml-2.5 -mt-2.5 bg-red-600 border-2 border-white rounded-full shadow-md pointer-events-none transition-all hidden"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">*Klik pada gambar denah di atas jika ingin memindahkan lokasi titik pin.</p>
+        </div>
+        <div class="flex gap-3 pt-3 border-t border-gray-200 justify-end">
+          <button type="button" id="btn-batal-edit" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition-colors text-sm">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-[#095a79] hover:bg-[#117196] text-white rounded-lg font-semibold transition-colors text-sm shadow-md">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL KONFIRMASI HAPUS -->
+  <div id="modal-hapus" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="modal-hapus-box" class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6 text-center transform transition-all duration-300 scale-95 flex flex-col items-center">
+      <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-2">Konfirmasi Hapus</h3>
+      <p class="text-sm text-gray-600 mb-6">Peringatan: Apakah Anda yakin ingin menghapus unit <span id="teks-unit-hapus" class="font-bold text-gray-800">-</span>? Data yang dihapus tidak dapat dikembalikan.</p>
+      <div class="flex gap-3 w-full justify-center">
+        <button type="button" id="btn-batal-hapus" class="w-1/2 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition-colors text-sm">Batal</button>
+        <button type="button" id="btn-konfirmasi-hapus" class="w-1/2 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors text-sm shadow-md">Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- External Script Utama -->
+  <script type="module" src="js/dashboard.js"></script>
+
+</body>
+</html>
